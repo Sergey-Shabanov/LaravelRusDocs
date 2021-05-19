@@ -18,6 +18,7 @@ git bc55593db998175d5fafb1fd385ddf7b7a0ea36c
     - [MySQL](#mysql)
     - [Redis](#redis)
     - [MeiliSearch](#meilisearch)
+- [File Storage](#file-storage)
 - [Тестирование](#running-tests)
     - [Laravel Dusk](#laravel-dusk)
 - [Предпросмотр писем](#previewing-emails)
@@ -198,6 +199,23 @@ sail npm run prod
 
 Со своего локального компьютера вы можете получить доступ к веб-панели администрирования MeiliSearch, перейдя по адресу `http://localhost:7700` в своем браузере.
 
+<a name="file-storage"></a>
+## File Storage
+
+If you plan to use Amazon S3 to store files while running your application in its production environment, you may wish to install the [MinIO](https://min.io) service when installing Sail. MinIO provides an S3 compatible API that you may use to develop locally using Laravel's `s3` file storage driver without creating "test" storage buckets in your production S3 environment. If you choose to install MinIO while installing Sail, a MinIO configuration section will be added to your application's `docker-compose.yml` file.
+
+By default, your application's `filesystems` configuration file already contains a disk configuration for the `s3` disk. In addition to using this disk to interact with Amazon S3, you may use it to interact with any S3 compatible file storage service such as MinIO by simply modifying the associated environment variables that control its configuration. For example, when using MinIO, your filesystem environment variable configuration should be defined as follows:
+
+```ini
+FILESYSTEM_DRIVER=s3
+AWS_ACCESS_KEY_ID=sail
+AWS_SECRET_ACCESS_KEY=password
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=local
+AWS_ENDPOINT=http://minio:9000
+AWS_USE_PATH_STYLE_ENDPOINT=true
+```
+
 <a name="running-tests"></a>
 ## Тестирование
 
@@ -298,7 +316,7 @@ image: sail-8.0/app
 Иногда может потребоваться предоставить общий доступ к своему сайту, например чтобы его посмотрели коллеги или протестировать интеграцию веб-перехватчика с вашим приложением. Чтобы поделиться своим сайтом, вы можете использовать команду `share`. После выполнения этой команды вам будет выдан случайный URL-адрес `laravel-sail.site`, который вы можете использовать для доступа к своему приложению:
 
     sail share
-    
+
 При совместном использовании сайта с помощью команды `share` вы должны настроить доверенные прокси вашего приложения в промежуточном программном обеспечении `TrustProxies`. В противном случае вспомогательные средства генерации URL, такие как `url` и `route`, не смогут определить правильный HTTP-хост, который следует использовать во время генерации URL:
 
     /**

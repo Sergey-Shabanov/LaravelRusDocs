@@ -18,7 +18,7 @@ git bc55593db998175d5fafb1fd385ddf7b7a0ea36c
     - [MySQL](#mysql)
     - [Redis](#redis)
     - [MeiliSearch](#meilisearch)
-- [File Storage](#file-storage)
+- [Файловое хранилище](#file-storage)
 - [Тестирование](#running-tests)
     - [Laravel Dusk](#laravel-dusk)
 - [Предпросмотр писем](#previewing-emails)
@@ -200,11 +200,11 @@ sail npm run prod
 Со своего локального компьютера вы можете получить доступ к веб-панели администрирования MeiliSearch, перейдя по адресу `http://localhost:7700` в своем браузере.
 
 <a name="file-storage"></a>
-## File Storage
+## Файловое хранилище
 
-If you plan to use Amazon S3 to store files while running your application in its production environment, you may wish to install the [MinIO](https://min.io) service when installing Sail. MinIO provides an S3 compatible API that you may use to develop locally using Laravel's `s3` file storage driver without creating "test" storage buckets in your production S3 environment. If you choose to install MinIO while installing Sail, a MinIO configuration section will be added to your application's `docker-compose.yml` file.
+Если вы планируете использовать Amazon S3 для хранения файлов при запуске приложения в производственной среде, вы можете установить службу [MinIO](https://min.io) при установке Sail. MinIO предоставляет совместимый с S3 API, который вы можете использовать для локальной разработки с помощью драйвера хранилища файлов Laravel s3, не создавая «тестовых» сегментов хранилища в производственной среде S3. Если вы выберете установку MinIO при установке Sail, раздел конфигурации MinIO будет добавлен в файл `docker-compose.yml` вашего приложения.
 
-By default, your application's `filesystems` configuration file already contains a disk configuration for the `s3` disk. In addition to using this disk to interact with Amazon S3, you may use it to interact with any S3 compatible file storage service such as MinIO by simply modifying the associated environment variables that control its configuration. For example, when using MinIO, your filesystem environment variable configuration should be defined as follows:
+По умолчанию файл конфигурации приложения `filesystems` уже содержит конфигурацию диска для диска `s3`. Помимо использования этого диска для взаимодействия с Amazon S3, вы можете использовать его для взаимодействия с любой S3-совместимой службой хранения файлов, такой как MinIO, путем простого изменения связанных переменных среды, которые управляют его конфигурацией. Например, при использовании MinIO конфигурация переменной среды вашей файловой системы должна быть определена следующим образом:
 
 ```ini
 FILESYSTEM_DRIVER=s3

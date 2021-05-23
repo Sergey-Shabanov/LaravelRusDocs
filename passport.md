@@ -1,3 +1,7 @@
+git bbe4f5210f58fddb828c4e16261c552b8db59ef5
+
+---
+
 # Laravel Passport
 
 - [Introduction](#introduction)
@@ -199,7 +203,7 @@ If you are not going to use Passport's default migrations, you should call the `
 <a name="upgrading-passport"></a>
 ### Upgrading Passport
 
-When upgrading to a new major version of Passport, it's important that you carefully review [the upgrade guide](https://github.com/laravel/passport/blob/master/UPGRADE).
+When upgrading to a new major version of Passport, it's important that you carefully review [the upgrade guide](https://github.com/laravel/passport/blob/master/UPGRADE.md).
 
 <a name="configuration"></a>
 ## Configuration

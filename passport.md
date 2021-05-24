@@ -765,7 +765,7 @@ Passport также включает JSON API для управления авт
         Passport::enableImplicitGrant();
     }
 
-Once the grant has been enabled, developers may use their client ID to request an access token from your application. The consuming application should make a redirect request to your application's `/oauth/authorize` route like so:
+После включения разрешения разработчики могут использовать свой идентификатор клиента для запроса токена доступа из вашего приложения. Приложение-потребитель должно сделать запрос перенаправления на маршрут вашего приложения `/oauth/authorize` следующим образом:
 
     use Illuminate\Http\Request;
 
@@ -783,18 +783,18 @@ Once the grant has been enabled, developers may use their client ID to request a
         return redirect('http://passport-app.com/oauth/authorize?'.$query);
     });
 
-> {tip} Remember, the `/oauth/authorize` route is already defined by the `Passport::routes` method. You do not need to manually define this route.
+> {Примечание} Помните, что маршрут `/oauth/authorize` уже определен методом `Passport::routes`. Вам не нужно вручную определять этот маршрут.
 
 <a name="client-credentials-grant-tokens"></a>
-## Client Credentials Grant Tokens
+## Токены учетных данных
 
-The client credentials grant is suitable for machine-to-machine authentication. For example, you might use this grant in a scheduled job which is performing maintenance tasks over an API.
+Предоставление учетных данных клиента подходит для межмашинной (machine-to-machine) аутентификации. Например, вы можете использовать это разрешение в запланированном задании, которое выполняет задачи обслуживания через API.
 
-Before your application can issue tokens via the client credentials grant, you will need to create a client credentials grant client. You may do this using the `--client` option of the `passport:client` Artisan command:
+Прежде чем ваше приложение сможет выдавать токены с помощью предоставления учетных данных клиента, вам необходимо создать клиента предоставления учетных данных. Вы можете сделать это, используя параметр `--client` в Artisan-команде `passport:client`:
 
     php artisan passport:client --client
 
-Next, to use this grant type, you need to add the `CheckClientCredentials` middleware to the `$routeMiddleware` property of your `app/Http/Kernel.php` file:
+Затем, чтобы использовать этот тип разрешения, вам необходимо добавить посредника `CheckClientCredentials` в свойство `$routeMiddleware` вашего файла `app/Http/Kernel.php`:
 
     use Laravel\Passport\Http\Middleware\CheckClientCredentials;
 
@@ -802,22 +802,22 @@ Next, to use this grant type, you need to add the `CheckClientCredentials` middl
         'client' => CheckClientCredentials::class,
     ];
 
-Then, attach the middleware to a route:
+Затем назначьте посредника к маршруту:
 
     Route::get('/orders', function (Request $request) {
         ...
     })->middleware('client');
 
-To restrict access to the route to specific scopes, you may provide a comma-delimited list of the required scopes when attaching the `client` middleware to the route:
+Чтобы ограничить доступ к маршруту определенными областями, вы можете предоставить разделенный запятыми список требуемых областей при подключении посредника `client` к маршруту:
 
     Route::get('/orders', function (Request $request) {
         ...
     })->middleware('client:check-status,your-scope');
 
 <a name="retrieving-tokens"></a>
-### Retrieving Tokens
+### Получение токенов
 
-To retrieve a token using this grant type, make a request to the `oauth/token` endpoint:
+Чтобы получить токен с использованием этого типа разрешения, сделайте запрос к конечной точке `oauth/token`:
 
     use Illuminate\Support\Facades\Http;
 
@@ -831,18 +831,18 @@ To retrieve a token using this grant type, make a request to the `oauth/token` e
     return $response->json()['access_token'];
 
 <a name="personal-access-tokens"></a>
-## Personal Access Tokens
+## Токены персонального доступа
 
-Sometimes, your users may want to issue access tokens to themselves without going through the typical authorization code redirect flow. Allowing users to issue tokens to themselves via your application's UI can be useful for allowing users to experiment with your API or may serve as a simpler approach to issuing access tokens in general.
+Иногда ваши пользователи могут захотеть выдать себе токены доступа, не проходя типичный поток перенаправления кода авторизации. Разрешение пользователям выдавать себе токены через пользовательский интерфейс вашего приложения может быть полезно для предоставления пользователям возможности экспериментировать с вашим API или может служить более простым подходом к выдаче токенов доступа в целом.
 
 <a name="creating-a-personal-access-client"></a>
-### Creating A Personal Access Client
+### Создание токенов персонального доступа
 
-Before your application can issue personal access tokens, you will need to create a personal access client. You may do this by executing the `passport:client` Artisan command with the `--personal` option. If you have already run the `passport:install` command, you do not need to run this command:
+Прежде чем ваше приложение сможет выдавать токены персонального доступа, вам необходимо создать клиента личного доступа. Вы можете сделать это, выполнив Artisan-команду `passport:client` с параметром `--personal`. Если вы уже выполнили команду `passport:install`, вам не нужно запускать эту команду:
 
     php artisan passport:client --personal
 
-After creating your personal access client, place the client's ID and plain-text secret value in your application's `.env` file:
+После создания клиента личного доступа поместите идентификатор клиента и секретное значение в виде обычного текста в файл `.env` вашего приложения:
 
 ```bash
 PASSPORT_PERSONAL_ACCESS_CLIENT_ID="client-id-value"
@@ -850,31 +850,31 @@ PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET="unhashed-client-secret-value"
 ```
 
 <a name="managing-personal-access-tokens"></a>
-### Managing Personal Access Tokens
+### Управление токенами персонального доступа
 
-Once you have created a personal access client, you may issue tokens for a given user using the `createToken` method on the `App\Models\User` model instance. The `createToken` method accepts the name of the token as its first argument and an optional array of [scopes](#token-scopes) as its second argument:
+После того как вы создали клиент персонального доступа, вы можете выдавать токены для данного пользователя, используя метод `createToken` в экземпляре модели `App\Models\User`. Метод `createToken` принимает имя токена в качестве первого аргумента и необязательный массив [области](#token-scopes) в качестве второго аргумента:
 
     use App\Models\User;
 
     $user = User::find(1);
 
-    // Creating a token without scopes...
+    // Создание токена без области действия ...
     $token = $user->createToken('Token Name')->accessToken;
 
-    // Creating a token with scopes...
+    // Создание токена с областью ...
     $token = $user->createToken('My Token', ['place-orders'])->accessToken;
 
 <a name="personal-access-tokens-json-api"></a>
 #### JSON API
 
-Passport also includes a JSON API for managing personal access tokens. You may pair this with your own frontend to offer your users a dashboard for managing personal access tokens. Below, we'll review all of the API endpoints for managing personal access tokens. For convenience, we'll use [Axios](https://github.com/mzabriskie/axios) to demonstrate making HTTP requests to the endpoints.
+Passport также включает JSON API для управления токенами личного доступа. Вы можете связать это со своим собственным интерфейсом, чтобы предложить своим пользователям панель управления для управления токенами личного доступа. Ниже мы рассмотрим все конечные точки API для управления токенами личного доступа. Для удобства мы будем использовать [Axios](https://github.com/mzabriskie/axios), чтобы продемонстрировать выполнение HTTP-запросов к конечным точкам.
 
-The JSON API is guarded by the `web` and `auth` middleware; therefore, it may only be called from your own application. It is not able to be called from an external source.
+JSON API защищен посредниками `web` и `auth`; поэтому его можно вызывать только из вашего собственного приложения. Он не может быть вызван из внешнего источника.
 
 <a name="get-oauthscopes"></a>
 #### `GET /oauth/scopes`
 
-This route returns all of the [scopes](#token-scopes) defined for your application. You may use this route to list the scopes a user may assign to a personal access token:
+Этот маршрут возвращает все [области](#token-scopes), определенные для вашего приложения. Вы можете использовать этот маршрут для перечисления областей, которые пользователь может назначить личному токену доступа:
 
     axios.get('/oauth/scopes')
         .then(response => {
@@ -884,7 +884,7 @@ This route returns all of the [scopes](#token-scopes) defined for your applicati
 <a name="get-oauthpersonal-access-tokens"></a>
 #### `GET /oauth/personal-access-tokens`
 
-This route returns all of the personal access tokens that the authenticated user has created. This is primarily useful for listing all of the user's tokens so that they may edit or revoke them:
+Этот маршрут возвращает все токены личного доступа, созданные аутентифицированным пользователем. Это в первую очередь полезно для перечисления всех токенов пользователей, чтобы они могли редактировать или отзывать их:
 
     axios.get('/oauth/personal-access-tokens')
         .then(response => {
@@ -894,7 +894,7 @@ This route returns all of the personal access tokens that the authenticated user
 <a name="post-oauthpersonal-access-tokens"></a>
 #### `POST /oauth/personal-access-tokens`
 
-This route creates new personal access tokens. It requires two pieces of data: the token's `name` and the `scopes` that should be assigned to the token:
+Этот маршрут создает новые токены личного доступа. Для этого требуются два параметра: `name` и` scopes`, которые должны быть назначены токену:
 
     const data = {
         name: 'Token Name',
@@ -906,23 +906,23 @@ This route creates new personal access tokens. It requires two pieces of data: t
             console.log(response.data.accessToken);
         })
         .catch (response => {
-            // List errors on response...
+            // список ошибок ответа
         });
 
 <a name="delete-oauthpersonal-access-tokenstoken-id"></a>
 #### `DELETE /oauth/personal-access-tokens/{token-id}`
 
-This route may be used to revoke personal access tokens:
+Этот маршрут может использоваться для отзыва токенов личного доступа:
 
     axios.delete('/oauth/personal-access-tokens/' + tokenId);
 
 <a name="protecting-routes"></a>
-## Protecting Routes
+## Защита маршрутов
 
 <a name="via-middleware"></a>
-### Via Middleware
+### Через посредников
 
-Passport includes an [authentication guard](/docs/{{version}}/authentication#adding-custom-guards) that will validate access tokens on incoming requests. Once you have configured the `api` guard to use the `passport` driver, you only need to specify the `auth:api` middleware on any routes that should require a valid access token:
+Паспорт включает в себя [защиту аутентификации](/docs/{{version}}/authentication#adding-custom-guards), которая проверяет токены доступа при входящих запросах. После того как вы настроили защиту `api` для использования драйвера `passport`, вам нужно указать посредника `auth:api` на всех маршрутах, для которых требуется действующий токен доступа:
 
     Route::get('/user', function () {
         //

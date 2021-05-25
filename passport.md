@@ -920,7 +920,7 @@ JSON API защищен посредниками `web` и `auth`; поэтому
 ## Защита маршрутов
 
 <a name="via-middleware"></a>
-### Через посредников
+### Защита маршрутов через посредников
 
 Паспорт включает в себя [защиту аутентификации](/docs/{{version}}/authentication#adding-custom-guards), которая проверяет токены доступа при входящих запросах. После того как вы настроили защиту `api` для использования драйвера `passport`, вам нужно указать посредника `auth:api` на всех маршрутах, для которых требуется действующий токен доступа:
 
@@ -929,9 +929,9 @@ JSON API защищен посредниками `web` и `auth`; поэтому
     })->middleware('auth:api');
 
 <a name="multiple-authentication-guards"></a>
-#### Multiple Authentication Guards
+#### Множественная защита аутентификации
 
-If your application authenticates different types of users that perhaps use entirely different Eloquent models, you will likely need to define a guard configuration for each user provider type in your application. This allows you to protect requests intended for specific user providers. For example, given the following guard configuration the `config/auth.php` configuration file:
+Если ваше приложение аутентифицирует разные типы пользователей, которые, возможно, используют совершенно разные модели Eloquent, вам, вероятно, потребуется определить конфигурацию защиты для каждого типа провайдера пользователей в вашем приложении. Это позволяет защитить запросы, предназначенные для конкретных поставщиков услуг. Например, при следующей конфигурации защиты конфигурационный файл `config/auth.php`:
 
     'api' => [
         'driver' => 'passport',
@@ -943,18 +943,18 @@ If your application authenticates different types of users that perhaps use enti
         'provider' => 'customers',
     ],
 
-The following route will utilize the `api-customers` guard, which uses the `customers` user provider, to authenticate incoming requests:
+Следующий маршрут будет использовать защиту `api-customers`, которая использует провайдера пользователей `customers` для аутентификации входящих запросов:
 
     Route::get('/customer', function () {
         //
     })->middleware('auth:api-customers');
 
-> {tip} For more information on using multiple user providers with Passport, please consult the [password grant documentation](#customizing-the-user-provider).
+> {Примечание} Для получения дополнительной информации об использовании нескольких поставщиков пользователей с Passport обратитесь к [документации по предоставлению пароля](#customizing-the-user-provider).
 
 <a name="passing-the-access-token"></a>
-### Passing The Access Token
+### Защита маршрутов через передачу токена
 
-When calling routes that are protected by Passport, your application's API consumers should specify their access token as a `Bearer` token in the `Authorization` header of their request. For example, when using the Guzzle HTTP library:
+При вызове маршрутов, защищенных Passport, пользователи API вашего приложения должны указать свой токен доступа как токен Bearer в заголовке Authorization своего запроса. Например, при использовании HTTP-библиотеки Guzzle:
 
     use Illuminate\Support\Facades\Http;
 
@@ -966,14 +966,14 @@ When calling routes that are protected by Passport, your application's API consu
     return $response->json();
 
 <a name="token-scopes"></a>
-## Token Scopes
+## Области токенов
 
-Scopes allow your API clients to request a specific set of permissions when requesting authorization to access an account. For example, if you are building an e-commerce application, not all API consumers will need the ability to place orders. Instead, you may allow the consumers to only request authorization to access order shipment statuses. In other words, scopes allow your application's users to limit the actions a third-party application can perform on their behalf.
+Области позволяют вашим клиентам API запрашивать определенный набор разрешений при запросе авторизации для доступа к учетной записи. Например, если вы создаете приложение для электронной коммерции, не всем потребителям API потребуется возможность размещать заказы. Вместо этого вы можете разрешить потребителям запрашивать авторизацию только для доступа к статусам отгрузки заказа. Другими словами, области позволяют пользователям вашего приложения ограничивать действия, которые стороннее приложение может выполнять от их имени.
 
 <a name="defining-scopes"></a>
-### Defining Scopes
+### Определение областей
 
-You may define your API's scopes using the `Passport::tokensCan` method in the `boot` method of your application's `App\Providers\AuthServiceProvider` class. The `tokensCan` method accepts an array of scope names and scope descriptions. The scope description may be anything you wish and will be displayed to users on the authorization approval screen:
+Вы можете определить области своего API, используя метод `Passport::tokensCan` в методе `boot` класса `App\Providers\AuthServiceProvider` вашего приложения. Метод `tokensCan` принимает массив имен и описаний областей видимости. Описание области действия может быть любым, и оно будет отображаться для пользователей на экране утверждения авторизации:
 
     /**
      * Регистрация сервисов аутентификации и авторизации.
@@ -993,9 +993,9 @@ You may define your API's scopes using the `Passport::tokensCan` method in the `
     }
 
 <a name="default-scope"></a>
-### Default Scope
+### Области по-умолчанию
 
-If a client does not request any specific scopes, you may configure your Passport server to attach default scope(s) to the token using the `setDefaultScope` method. Typically, you should call this method from the `boot` method of your application's `App\Providers\AuthServiceProvider` class:
+Если клиент не запрашивает какие-либо определенные области, вы можете настроить свой сервер Passport для присоединения области (областей) по умолчанию к токену с помощью метода `setDefaultScope`. Как правило, вы должны вызывать этот метод из метода `boot` класса `App\Providers\AuthServiceProvider` вашего приложения:
 
     use Laravel\Passport\Passport;
 
@@ -1010,12 +1010,12 @@ If a client does not request any specific scopes, you may configure your Passpor
     ]);
 
 <a name="assigning-scopes-to-tokens"></a>
-### Assigning Scopes To Tokens
+### Назначение областей токенам
 
 <a name="when-requesting-authorization-codes"></a>
-#### When Requesting Authorization Codes
+#### При запросе кодов авторизации
 
-When requesting an access token using the authorization code grant, consumers should specify their desired scopes as the `scope` query string parameter. The `scope` parameter should be a space-delimited list of scopes:
+При запросе токена доступа с использованием предоставления кода авторизации потребители должны указать свои желаемые области в качестве параметра строки запроса `scope`. Параметр `scope` должен быть списком областей, разделенных пробелами:
 
     Route::get('/redirect', function () {
         $query = http_build_query([
@@ -1029,42 +1029,42 @@ When requesting an access token using the authorization code grant, consumers sh
     });
 
 <a name="when-issuing-personal-access-tokens"></a>
-#### When Issuing Personal Access Tokens
+#### При выдаче токенов личного доступа
 
-If you are issuing personal access tokens using the `App\Models\User` model's `createToken` method, you may pass the array of desired scopes as the second argument to the method:
+Если вы выдаете токены личного доступа с помощью метода `createToken` модели `App\Models\User`, вы можете передать массив желаемых областей в качестве второго аргумента метода:
 
     $token = $user->createToken('My Token', ['place-orders'])->accessToken;
 
 <a name="checking-scopes"></a>
-### Checking Scopes
+### Проверка областей
 
-Passport includes two middleware that may be used to verify that an incoming request is authenticated with a token that has been granted a given scope. To get started, add the following middleware to the `$routeMiddleware` property of your `app/Http/Kernel.php` file:
+Passport включает два посредника, которые могут использоваться для проверки подлинности входящего запроса с помощью токена, и для них предоставлена заданная область. Для начала добавьте следующие посредники в свойство `$routeMiddleware` вашего файла `app/Http/Kernel.php`:
 
     'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
     'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
 
 <a name="check-for-all-scopes"></a>
-#### Check For All Scopes
+#### Проверка всех областей
 
-The `scopes` middleware may be assigned to a route to verify that the incoming request's access token has all of the listed scopes:
+Посреднику областей `scopes` может быть назначен маршрут для проверки того, что токен доступа входящего запроса содержит все перечисленные области:
 
     Route::get('/orders', function () {
-        // Access token has both "check-status" and "place-orders" scopes...
+        // Токен содержит обе области - "check-status" и "place-orders" ...
     })->middleware(['auth:api', 'scopes:check-status,place-orders']);
 
 <a name="check-for-any-scopes"></a>
-#### Check For Any Scopes
+#### Проверка любых областей
 
-The `scope` middleware may be assigned to a route to verify that the incoming request's access token has *at least one* of the listed scopes:
+Посреднику областей `scopes` может быть назначен маршрут для проверки того, что токен доступа входящего запроса имеет *хотя бы одну* из перечисленных областей:
 
     Route::get('/orders', function () {
-        // Access token has either "check-status" or "place-orders" scope...
+        // Токен содержит одну из областей - "check-status" или "place-orders" ...
     })->middleware(['auth:api', 'scope:check-status,place-orders']);
 
 <a name="checking-scopes-on-a-token-instance"></a>
-#### Checking Scopes On A Token Instance
+#### Проверка областей на экземпляре токена
 
-Once an access token authenticated request has entered your application, you may still check if the token has a given scope using the `tokenCan` method on the authenticated `App\Models\User` instance:
+После того как запрос с аутентификацией токена доступа поступил в ваше приложение, вы все равно можете проверить, имеет ли токен заданную область действия, используя метод `tokenCan` в экземпляре `App\Models\User`:
 
     use Illuminate\Http\Request;
 
@@ -1075,41 +1075,41 @@ Once an access token authenticated request has entered your application, you may
     });
 
 <a name="additional-scope-methods"></a>
-#### Additional Scope Methods
+#### Дополнительные методы области
 
-The `scopeIds` method will return an array of all defined IDs / names:
+Метод `scopeIds` вернет массив всех определенных идентификаторов / имен:
 
     use Laravel\Passport\Passport;
 
     Passport::scopeIds();
 
-The `scopes` method will return an array of all defined scopes as instances of `Laravel\Passport\Scope`:
+Метод `scopes` вернет массив всех определенных областей как экземпляры `Laravel\Passport\Scope`:
 
     Passport::scopes();
 
-The `scopesFor` method will return an array of `Laravel\Passport\Scope` instances matching the given IDs / names:
+Метод `scopesFor` вернет массив экземпляров `Laravel\Passport\Scope`, соответствующих указанным идентификаторам / именам:
 
     Passport::scopesFor(['place-orders', 'check-status']);
 
-You may determine if a given scope has been defined using the `hasScope` method:
+Вы можете определить, была ли определена область, используя метод `hasScope`:
 
     Passport::hasScope('place-orders');
 
 <a name="consuming-your-api-with-javascript"></a>
-## Consuming Your API With JavaScript
+## Использование API через JavaScript
 
-When building an API, it can be extremely useful to be able to consume your own API from your JavaScript application. This approach to API development allows your own application to consume the same API that you are sharing with the world. The same API may be consumed by your web application, mobile applications, third-party applications, and any SDKs that you may publish on various package managers.
+При создании API может быть чрезвычайно полезно иметь возможность использовать собственный API из приложения JavaScript. Такой подход к разработке API позволяет вашему собственному приложению использовать тот же API, которым вы делитесь со всем миром. Один и тот же API может использоваться вашим веб-приложением, мобильными приложениями, сторонними приложениями и любыми SDK, которые вы можете публиковать в различных менеджерах пакетов.
 
-Typically, if you want to consume your API from your JavaScript application, you would need to manually send an access token to the application and pass it with each request to your application. However, Passport includes a middleware that can handle this for you. All you need to do is add the `CreateFreshApiToken` middleware to your `web` middleware group in your `app/Http/Kernel.php` file:
+Как правило, если вы хотите использовать свой API из своего приложения JavaScript, вам необходимо вручную отправить токен доступа в приложение и передать его с каждым запросом в ваше приложение. Однако Passport включает посредник, который может справиться с этим за вас. Все, что вам нужно сделать, это добавить посредник `CreateFreshApiToken` в вашу группу посредников `web` в файле `app/Http/Kernel.php`:
 
     'web' => [
-        // Other middleware...
+        // Другие посредники ...
         \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
     ],
 
-> {note} You should ensure that the `CreateFreshApiToken` middleware is the last middleware listed in your middleware stack.
+> {Примечание} Вы должны убедиться, что посредник `CreateFreshApiToken` является последним в списке ваших посредников указанных ранее.
 
-This middleware will attach a `laravel_token` cookie to your outgoing responses. This cookie contains an encrypted JWT that Passport will use to authenticate API requests from your JavaScript application. The JWT has a lifetime equal to your `session.lifetime` configuration value. Now, since the browser will automatically send the cookie with all subsequent requests, you may make requests to your application's API without explicitly passing an access token:
+Это посредник будет прикреплять файл cookie `laravel_token` к вашим исходящим ответам. Этот файл cookie содержит зашифрованный JWT, который Passport будет использовать для аутентификации запросов API от вашего приложения JavaScript. Время жизни JWT равно вашему значению конфигурации session.lifetime. Теперь, поскольку браузер автоматически отправляет cookie со всеми последующими запросами, вы можете делать запросы к API вашего приложения без явной передачи токена доступа:
 
     axios.get('/api/user')
         .then(response => {
@@ -1117,9 +1117,9 @@ This middleware will attach a `laravel_token` cookie to your outgoing responses.
         });
 
 <a name="customizing-the-cookie-name"></a>
-#### Customizing The Cookie Name
+#### Настройка имени Cookie
 
-If needed, you can customize the `laravel_token` cookie's name using the `Passport::cookie` method. Typically, this method should be called from the `boot` method of your application's `App\Providers\AuthServiceProvider` class:
+При необходимости вы можете настроить имя файла cookie `laravel_token`, используя метод `Passport::cookie`. Обычно этот метод следует вызывать из метода `boot` класса `App\Providers\AuthServiceProvider` вашего приложения:
 
     /**
      * Регистрация сервисов аутентификации и авторизации.
@@ -1136,19 +1136,19 @@ If needed, you can customize the `laravel_token` cookie's name using the `Passpo
     }
 
 <a name="csrf-protection"></a>
-#### CSRF Protection
+#### CSRF защита
 
-When using this method of authentication, you will need to ensure a valid CSRF token header is included in your requests. The default Laravel JavaScript scaffolding includes an Axios instance, which will automatically use the encrypted `XSRF-TOKEN` cookie value to send an `X-XSRF-TOKEN` header on same-origin requests.
+При использовании этого метода аутентификации вам необходимо убедиться, что в ваши запросы включен действительный заголовок токена CSRF. В состав шаблонов JavaScript Laravel по умолчанию входит экземпляр Axios, который будет автоматически использовать зашифрованное значение cookie `XSRF-TOKEN` для отправки заголовка `X-XSRF-TOKEN` в запросах.
 
-> {tip} If you choose to send the `X-CSRF-TOKEN` header instead of `X-XSRF-TOKEN`, you will need to use the unencrypted token provided by `csrf_token()`.
+> {Примечание} Если вы решите отправить заголовок `X-CSRF-TOKEN` вместо `X-XSRF-TOKEN`, вам нужно использовать незашифрованный токен, предоставленный `csrf_token()`.
 
 <a name="events"></a>
-## Events
+## События
 
-Passport raises events when issuing access tokens and refresh tokens. You may use these events to prune or revoke other access tokens in your database. If you would like, you may attach listeners to these events in your application's `App\Providers\EventServiceProvider` class:
+Passport вызывает события при выдаче токенов доступа и обновлении токенов. Вы можете использовать эти события для удаления или отмены других токенов доступа в вашей базе данных. При желании вы можете прикрепить слушателей к этим событиям в классе `App\Providers\EventServiceProvider` вашего приложения:
 
     /**
-     * The event listener mappings for the application.
+     * Подписчики событий приложения.
      *
      * @var array
      */
@@ -1163,9 +1163,9 @@ Passport raises events when issuing access tokens and refresh tokens. You may us
     ];
 
 <a name="testing"></a>
-## Testing
+## Тестирование
 
-Passport's `actingAs` method may be used to specify the currently authenticated user as well as its scopes. The first argument given to the `actingAs` method is the user instance and the second is an array of scopes that should be granted to the user's token:
+Метод `actingAs` Passport может использоваться для указания аутентифицированного в данный момент пользователя, а также его областей действия. Первым аргументом, передаваемым методу `actingAs`, является экземпляр пользователя, а вторым - массив областей видимости, которые должны быть предоставлены токену пользователя:
 
     use App\Models\User;
     use Laravel\Passport\Passport;
@@ -1182,7 +1182,7 @@ Passport's `actingAs` method may be used to specify the currently authenticated 
         $response->assertStatus(201);
     }
 
-Passport's `actingAsClient` method may be used to specify the currently authenticated client as well as its scopes. The first argument given to the `actingAsClient` method is the client instance and the second is an array of scopes that should be granted to the client's token:
+Метод `actingAsClient` Passport может использоваться для указания аутентифицированного в данный момент клиента, а также его областей. Первым аргументом, передаваемым методу `actingAsClient`, является экземпляр клиента, а вторым — массив областей видимости, которые должны быть предоставлены токену клиента:
 
     use Laravel\Passport\Client;
     use Laravel\Passport\Passport;

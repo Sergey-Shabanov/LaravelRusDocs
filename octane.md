@@ -1,27 +1,31 @@
+git e27f12010aa82141f57f21b5fda9004c96e4075d
+
+---
+
 # Laravel Octane
 
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Server Prerequisites](#server-prerequisites)
+- [Введение](#introduction)
+- [Установка](#installation)
+- [Требования к серверу](#server-prerequisites)
     - [RoadRunner](#roadrunner)
     - [Swoole](#swoole)
-- [Serving Your Application](#serving-your-application)
-    - [Serving Your Application Via HTTPS](#serving-your-application-via-https)
-    - [Serving Your Application Via Nginx](#serving-your-application-via-nginx)
-    - [Watching For File Changes](#watching-for-file-changes)
-    - [Specifying The Worker Count](#specifying-the-worker-count)
-    - [Specifying The Max Request Count](#specifying-the-max-request-count)
-    - [Reloading The Workers](#reloading-the-workers)
-    - [Stopping The Server](#stopping-the-server)
-- [Dependency Injection & Octane](#dependency-injection-and-octane)
-    - [Container Injection](#container-injection)
-    - [Request Injection](#request-injection)
-    - [Configuration Repository Injection](#configuration-repository-injection)
-- [Managing Memory Leaks](#managing-memory-leaks)
-- [Concurrent Tasks](#concurrent-tasks)
+- [Поддержка приложения](#serving-your-application)
+    - [Поддержка приложения через HTTPS](#serving-your-application-via-https)
+    - [Поддержка приложения через Nginx](#serving-your-application-via-nginx)
+    - [Наблюдение за изменениями файлов](#watching-for-file-changes)
+    - [Указание количества Worker](#specifying-the-worker-count)
+    - [Указание максимального количества запросов](#specifying-the-max-request-count)
+    - [Перезагрузка Workers](#reloading-the-workers)
+    - [Остановка сервера](#stopping-the-server)
+- [Внедрение зависимости и Octane](#dependency-injection-and-octane)
+    - [Контейнер для внедрений](#container-injection)
+    - [Запрос на внедрение](#request-injection)
+    - [Настройка репозитория внедрения](#configuration-repository-injection)
+- [Управление утечкой памяти](#managing-memory-leaks)
+- [Параллельные задачи](#concurrent-tasks)
 - [Ticks & Intervals](#ticks-and-intervals)
-- [The Octane Cache](#the-octane-cache)
-- [Tables](#tables)
+- [Кеш Octane](#the-octane-cache)
+- [Таблицы](#tables)
 
 <a name="introduction"></a>
 ## Introduction

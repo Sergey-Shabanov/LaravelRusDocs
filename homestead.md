@@ -52,6 +52,15 @@ Homestead работает в любой системе Windows, macOS или Li
 <a name="included-software"></a>
 ### Включенное в набор программное обеспечение
 
+<style>
+    #software-list > ul {
+        column-count: 2; -moz-column-count: 2; -webkit-column-count: 2;
+        column-gap: 5em; -moz-column-gap: 5em; -webkit-column-gap: 5em;
+        line-height: 1.9;
+    }
+</style>
+
+<div id="software-list" markdown="1">
 - Ubuntu 20.04
 - Git
 - PHP 8.0
@@ -77,10 +86,20 @@ Homestead работает в любой системе Windows, macOS или Li
 - Xdebug
 - XHProf / Tideways / XHGui
 - wp-cli
+</div>
 
 <a name="optional-software"></a>
 ### Дополнительное программное обеспечение
 
+<style>
+    #software-list > ul {
+        column-count: 2; -moz-column-count: 2; -webkit-column-count: 2;
+        column-gap: 5em; -moz-column-gap: 5em; -webkit-column-gap: 5em;
+        line-height: 1.9;
+    }
+</style>
+
+<div id="software-list" markdown="1">
 - Apache
 - Blackfire
 - Cassandra
@@ -110,6 +129,7 @@ Homestead работает в любой системе Windows, macOS или Li
 - TimescaleDB
 - Trader <small>(PHP extension)</small>
 - Webdriver & Laravel Dusk Utilities
+</div>
 
 <a name="installation-and-setup"></a>
 ## Установка и настройка

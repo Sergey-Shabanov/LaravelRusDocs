@@ -47,7 +47,7 @@ Laravel стремится сделать весь процесс разрабо
 
 Homestead работает в любой системе Windows, macOS или Linux и включает Nginx, PHP, MySQL, PostgreSQL, Redis, Memcached, Node и все другое программное обеспечение, необходимое для разработки потрясающих приложений Laravel.
 
-> {Примечание} Если вы используете Windows, вам может потребоваться включить аппаратную виртуализацию (VT-x). Обычно его можно включить в BIOS. Если вы используете Hyper-V в системе UEFI, вам может дополнительно потребоваться отключить Hyper-V, чтобы получить доступ к VT-x.
+> {note} Если вы используете Windows, вам может потребоваться включить аппаратную виртуализацию (VT-x). Обычно его можно включить в BIOS. Если вы используете Hyper-V в системе UEFI, вам может дополнительно потребоваться отключить Hyper-V, чтобы получить доступ к VT-x.
 
 <a name="included-software"></a>
 ### Включенное в набор программное обеспечение
@@ -190,7 +190,7 @@ folders:
       to: /home/vagrant/project1
 ```
 
-> {Примечание} Пользователи Windows, при указании пути не должны использовать синтаксис `~/`, а вместо этого должны указать полный путь к своему проекту от корня диска, например `C:\Users\user\Code\project1`.
+> {note} Пользователи Windows, при указании пути не должны использовать синтаксис `~/`, а вместо этого должны указать полный путь к своему проекту от корня диска, например `C:\Users\user\Code\project1`.
 
 Вы всегда должны сопоставлять каждое ваше приложение с его собственной отдельной директорией вместо назначения одного большого каталога, содержащего все ваши приложения. При назначении папки приложению виртуальная машина должна отслеживать все операции ввода-вывода на диске для *каждого* файла в папке. Поэтому у вас может снизиться производительность среды, если в папке много файлов:
 
@@ -202,7 +202,7 @@ folders:
       to: /home/vagrant/project2
 ```
 
-> {Примечание} Вы никогда не должны монтировать `.` (текущий каталог) при использовании Homestead. Это приводит к тому, что Vagrant не отображает текущую папку в `/vagrant`, что нарушает работу дополнительных функций и приводит к неожиданным результатам при подготовке.
+> {note} Вы никогда не должны монтировать `.` (текущий каталог) при использовании Homestead. Это приводит к тому, что Vagrant не отображает текущую папку в `/vagrant`, что нарушает работу дополнительных функций и приводит к неожиданным результатам при подготовке.
 
 Чтобы включить [NFS](https://www.vagrantup.com/docs/synced-folders/nfs.html), вы можете добавить параметр `type` при сопоставлении папок:
 
@@ -211,7 +211,7 @@ folders:
           to: /home/vagrant/project1
           type: "nfs"
 
-> {Примечание} При использовании NFS в Windows вам следует рассмотреть возможность установки подключаемого модуля [vagrant-winnfsd](https://github.com/winnfsd/vagrant-winnfsd). Этот плагин будет поддерживать правильные разрешения пользователя / группы для файлов и каталогов на виртуальной машине Homestead.
+> {note} При использовании NFS в Windows вам следует рассмотреть возможность установки подключаемого модуля [vagrant-winnfsd](https://github.com/winnfsd/vagrant-winnfsd). Этот плагин будет поддерживать правильные разрешения пользователя / группы для файлов и каталогов на виртуальной машине Homestead.
 
 Вы также можете передать любые параметры, поддерживаемые [общими папками Vagrant](https://www.vagrantup.com/docs/synced-folders/basic_usage.html), указав их под ключом options:
 
@@ -234,7 +234,7 @@ folders:
 
 Если вы измените свойство `sites` после подготовки виртуальной машины Homestead, вы должны выполнить команду `vagrant reload --provision` в своем терминале, чтобы обновить конфигурацию Nginx на виртуальной машине.
 
-> {Примечание} Скрипты Homestead созданы максимально [идемпотентными](https://ru.wikipedia.org/wiki/Идемпотентность). Однако, если у вас возникли проблемы во время подготовки, вам следует удалить и повторно запустить виртуальную машину, выполнив команду `vagrant destroy && vagrant up`.
+> {note} Скрипты Homestead созданы максимально [идемпотентными](https://ru.wikipedia.org/wiki/Идемпотентность). Однако, если у вас возникли проблемы во время подготовки, вам следует удалить и повторно запустить виртуальную машину, выполнив команду `vagrant destroy && vagrant up`.
 
 <a name="hostname-resolution"></a>
 #### Определение имени хоста
@@ -254,7 +254,7 @@ http://homestead.test
 <a name="configuring-services"></a>
 ### Настройка сервисов
 
-Homestead starts several services by default; however, you may customize which services are enabled or disabled during provisioning. For example, you may enable PostgreSQL and disable MySQL by modifying the `services` option within your `Homestead.yaml` file:
+По умолчанию Homestead запускает несколько сервисов; однако вы можете настроить, какие службы будут включены или отключены во время подготовки. Например, вы можете включить PostgreSQL и отключить MySQL, изменив параметр `services` в файле `Homestead.yaml`:
 
 ```yaml
 services:
@@ -264,27 +264,27 @@ services:
         - "mysql"
 ```
 
-The specified services will be started or stopped based on their order in the `enabled` and `disabled` directives.
+Указанные службы будут запускаться или останавливаться в зависимости от их порядка в директивах `enabled`и `disabled`.
 
 <a name="launching-the-vagrant-box"></a>
-### Launching The Vagrant Box
+### Запуск Vagrant Box
 
-Once you have edited the `Homestead.yaml` to your liking, run the `vagrant up` command from your Homestead directory. Vagrant will boot the virtual machine and automatically configure your shared folders and Nginx sites.
+После того как вы отредактировали файл `Homestead.yaml` по своему вкусу, запустите команду `vagrant up` из каталога Homestead. Vagrant загрузит виртуальную машину и автоматически настроит ваши общие папки и сайты Nginx.
 
-To destroy the machine, you may use the `vagrant destroy` command.
+Чтобы удалить машину, вы можете использовать команду `vagrant destroy`.
 
 <a name="per-project-installation"></a>
-### Per Project Installation
+### Подготовка к установке
 
-Instead of installing Homestead globally and sharing the same Homestead virtual machine across all of your projects, you may instead configure a Homestead instance for each project you manage. Installing Homestead per project may be beneficial if you wish to ship a `Vagrantfile` with your project, allowing others working on the project to `vagrant up` immediately after cloning the project's repository.
+Вместо того чтобы устанавливать Homestead глобально и использовать одну и ту же виртуальную машину Homestead для всех ваших проектов, вы можете настроить экземпляр Homestead для каждого проекта, которым вы управляете. Установка Homestead для каждого проекта может быть полезной, если вы хотите опубликовать `Vagrantfile` вместе с вашим проектом, позволяя другим, работающим над проектом, пользоваться проектом сразу после клонирования репозитория проекта.
 
-You may install Homestead into your project using the Composer package manager:
+Вы можете установить Homestead в свой проект с помощью диспетчера пакетов Composer:
 
 ```bash
 composer require laravel/homestead --dev
 ```
 
-Once Homestead has been installed, invoke Homestead's `make` command to generate the `Vagrantfile` and `Homestead.yaml` file for your project. These files will be placed in the root of your project. The `make` command will automatically configure the `sites` and `folders` directives in the `Homestead.yaml` file:
+Как только Homestead будет установлен, вызовите команду Homestead `make`, чтобы сгенерировать файлы `Vagrantfile` и `Homestead.yaml` для вашего проекта. Эти файлы будут помещены в корень проекта. Команда `make` автоматически настроит директивы `sites` и `folder` в файле `Homestead.yaml`:
 
     // macOS / Linux...
     php vendor/bin/homestead make
@@ -292,12 +292,12 @@ Once Homestead has been installed, invoke Homestead's `make` command to generate
     // Windows...
     vendor\\bin\\homestead make
 
-Next, run the `vagrant up` command in your terminal and access your project at `http://homestead.test` in your browser. Remember, you will still need to add an `/etc/hosts` file entry for `homestead.test` or the domain of your choice if you are not using automatic [hostname resolution](#hostname-resolution).
+Затем запустите команду `vagrant up` в вашем терминале и войдите в проект по адресу `http://homestead.test` в браузере. Помните, что вам все равно нужно будет добавить запись файла `/etc/hosts` для `homestead.test` или домена по вашему выбору, если вы не используете автоматическое [определение имени хоста](#hostname-resolution).
 
 <a name="installing-optional-features"></a>
-### Installing Optional Features
+### Установка дополнительных пакетов
 
-Optional software is installed using the `features` option within your `Homestead.yaml` file. Most features can be enabled or disabled with a boolean value, while some features allow multiple configuration options:
+Дополнительное программное обеспечение устанавливается с помощью опции `features` в файле `Homestead.yaml`. Большинство функций можно включить или отключить с помощью логического значения, в то время как некоторые функции позволяют использовать несколько параметров конфигурации:
 
     features:
         - blackfire:
@@ -336,11 +336,11 @@ Optional software is installed using the `features` option within your `Homestea
         - webdriver: true
 
 <a name="elasticsearch"></a>
-#### Elasticsearch
+#### Elasticsearch (поисковая система)
 
-You may specify a supported version of Elasticsearch, which must be an exact version number (major.minor.patch). The default installation will create a cluster named 'homestead'. You should never give Elasticsearch more than half of the operating system's memory, so make sure your Homestead virtual machine has at least twice the Elasticsearch allocation.
+Вы можете указать поддерживаемую версию Elasticsearch, которая должна быть точным номером версии (major.minor.patch). При установке по умолчанию будет создан кластер с именем «homestead». Никогда не следует отдавать Elasticsearch больше половины памяти операционной системы, поэтому убедитесь, что на вашей виртуальной машине Homestead выделено как минимум вдвое больше памяти Elasticsearch.
 
-> {tip} Check out the [Elasticsearch documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current) to learn how to customize your configuration.
+> {tip} Ознакомьтесь с [документацией Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current), чтобы узнать, как настроить свою конфигурацию.
 
 <a name="mariadb"></a>
 #### MariaDB

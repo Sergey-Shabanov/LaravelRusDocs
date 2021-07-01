@@ -13,7 +13,7 @@ git 85466c3e68c6a575dc6cb7851e8f044f6c54d733
     - [Запуск Vagrant Box](#launching-the-vagrant-box)
     - [Подготовка к установке](#per-project-installation)
     - [Установка дополнительных пакетов](#installing-optional-features)
-    - [Алиасы](#aliases)
+    - [Псевдонимы](#aliases)
 - [Обновление Homestead](#updating-homestead)
 - [Ежедневное использование](#daily-usage)
     - [Подключение через SSH](#connecting-via-ssh)
@@ -345,52 +345,52 @@ composer require laravel/homestead --dev
 <a name="mariadb"></a>
 #### MariaDB
 
-Enabling MariaDB will remove MySQL and install MariaDB. MariaDB typically serves as a drop-in replacement for MySQL, so you should still use the `mysql` database driver in your application's database configuration.
+Включение MariaDB удалит MySQL и установит MariaDB. MariaDB обычно служит заменой MySQL, поэтому вам все равно следует использовать драйвер базы данных `mysql` в конфигурации базы данных вашего приложения.
 
 <a name="mongodb"></a>
 #### MongoDB
 
-The default MongoDB installation will set the database username to `homestead` and the corresponding password to `secret`.
+При установке MongoDB по умолчанию для имени пользователя базы данных будет установлено значение `homestead`, а для соответствующего пароля - `secret`.
 
 <a name="neo4j"></a>
 #### Neo4j
 
-The default Neo4j installation will set the database username to `homestead` and the corresponding password to `secret`. To access the Neo4j browser, visit `http://homestead.test:7474` via your web browser. The ports `7687` (Bolt), `7474` (HTTP), and `7473` (HTTPS) are ready to serve requests from the Neo4j client.
+При установке Neo4j по умолчанию для имени пользователя базы данных будет установлено значение `homestead`, а для соответствующего пароля - `secret`. Чтобы получить доступ к браузеру Neo4j, зайдите на сайт `http://homestead.test:7474` в своем браузере. Порты `7687` (Bolt), `7474` (HTTP) и `7473` (HTTPS) готовы обслуживать запросы от клиента Neo4j.
 
 <a name="aliases"></a>
-### Aliases
+### Псевдонимы
 
-You may add Bash aliases to your Homestead virtual machine by modifying the `aliases` file within your Homestead directory:
+Вы можете добавить псевдонимы Bash на свою виртуальную машину Homestead, изменив файл `aliases` в каталоге Homestead:
 
     alias c='clear'
     alias ..='cd ..'
 
-After you have updated the `aliases` file, you should re-provision the Homestead virtual machine using the `vagrant reload --provision` command. This will ensure that your new aliases are available on the machine.
+После обновления файла `aliases` вам следует повторно подготовить виртуальную машину Homestead с помощью команды `vagrant reload --provision`. Это обеспечит доступность ваших новых псевдонимов на машине.
 
 <a name="updating-homestead"></a>
-## Updating Homestead
+## Обновление Homestead
 
-Before you begin updating Homestead you should ensure you have removed your current virtual machine by running the following command in your Homestead directory:
+Перед тем, как начать обновление Homestead, убедитесь, что вы удалили текущую виртуальную машину, выполнив следующую команду в каталоге Homestead:
 
     vagrant destroy
 
-Next, you need to update the Homestead source code. If you cloned the repository, you can execute the following commands at the location you originally cloned the repository:
+Затем вам нужно обновить исходный код Homestead. Если вы клонировали репозиторий, вы можете выполнить следующие команды в том месте, где вы изначально клонировали репозиторий:
 
     git fetch
 
     git pull origin release
 
-These commands pull the latest Homestead code from the GitHub repository, fetch the latest tags, and then check out the latest tagged release. You can find the latest stable release version on Homestead's [GitHub releases page](https://github.com/laravel/homestead/releases).
+Эти команды скачивают последний код Homestead из репозитория GitHub, извлекают теги, а затем проверяют выпуск с тегами. Вы можете найти последнюю стабильную версию выпуска Homestead на [странице релизов GitHub](https://github.com/laravel/homestead/releases).
 
-If you have installed Homestead via your project's `composer.json` file, you should ensure your `composer.json` file contains `"laravel/homestead": "^12"` and update your dependencies:
+Если вы установили Homestead через файл `composer.json` вашего проекта, вы должны убедиться, что файл `composer.json` содержит `"laravel/homestead": "^12"` и обновите ваши зависимости:
 
     composer update
 
-Next, you should update the Vagrant box using the `vagrant box update` command:
+Затем вы должны обновить поле Vagrant с помощью команды `vagrant box update`:
 
     vagrant box update
 
-After updating the Vagrant box, you should run the `bash init.sh` command from the Homestead directory in order to update Homestead's additional configuration files. You will be asked whether you wish to overwrite your existing `Homestead.yaml`, `after.sh`, and `aliases` files:
+После обновления Vagrant вы должны запустить команду `bash init.sh` из каталога Homestead, чтобы обновить дополнительные файлы конфигурации Homestead. Затем вас спросят, хотите ли вы перезаписать существующие файлы `Homestead.yaml`, `after.sh` и `aliases`:
 
     // macOS / Linux...
     bash init.sh
@@ -398,7 +398,7 @@ After updating the Vagrant box, you should run the `bash init.sh` command from t
     // Windows...
     init.bat
 
-Finally, you will need to regenerate your Homestead virtual machine to utilize the latest Vagrant installation:
+Наконец, вам нужно будет обновить виртуальную машину Homestead, чтобы использовать последнюю установку Vagrant:
 
     vagrant up
 

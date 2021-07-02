@@ -403,17 +403,17 @@ composer require laravel/homestead --dev
     vagrant up
 
 <a name="daily-usage"></a>
-## Daily Usage
+## Ежедневное использование
 
 <a name="connecting-via-ssh"></a>
-### Connecting Via SSH
+### Подключение через SSH
 
-You can SSH into your virtual machine by executing the `vagrant ssh` terminal command from your Homestead directory.
+Вы можете подключиться к вашей виртуальной машине по SSH, выполнив команду терминала `vagrant ssh` из вашего каталога Homestead.
 
 <a name="adding-additional-sites"></a>
-### Adding Additional Sites
+### Добавление сайтов
 
-Once your Homestead environment is provisioned and running, you may want to add additional Nginx sites for your other Laravel projects. You can run as many Laravel projects as you wish on a single Homestead environment. To add an additional site, add the site to your `Homestead.yaml` file.
+После того как ваша среда Homestead подготовлена и запущена, вы можете добавить дополнительные сайты Nginx для других ваших проектов Laravel. Вы можете запускать столько проектов Laravel, сколько хотите, в одной среде Homestead. Чтобы добавить дополнительный сайт, добавьте его в файл `Homestead.yaml`.
 
     sites:
         - map: homestead.test
@@ -421,19 +421,19 @@ Once your Homestead environment is provisioned and running, you may want to add 
         - map: another.test
           to: /home/vagrant/project2/public
 
-> {note} You should ensure that you have configured a [folder mapping](#configuring-shared-folders) for the project's directory before adding the site.
+> {note} Перед добавлением сайта убедитесь, что вы настроили [сопоставление папок](#configuring-shared-folders) для каталога проекта.
 
-If Vagrant is not automatically managing your "hosts" file, you may need to add the new site to that file as well. On macOS and Linux, this file is located at `/etc/hosts`. On Windows, it is located at `C:\Windows\System32\drivers\etc\hosts`:
+Если Vagrant не управляет вашим файлом «hosts» автоматически, вам может потребоваться также добавить новый сайт в этот файл. В macOS и Linux этот файл находится в `/etc/hosts`. В Windows он находится в `C:\Windows\System32\drivers\etc\hosts`:
 
     192.168.10.10  homestead.test
     192.168.10.10  another.test
 
-Once the site has been added, execute the `vagrant reload --provision` terminal command from your Homestead directory.
+После добавления сайта выполните команду терминала `vagrant reload --provision` из каталога Homestead.
 
 <a name="site-types"></a>
-#### Site Types
+#### Типы сайтов
 
-Homestead supports several "types" of sites which allow you to easily run projects that are not based on Laravel. For example, we may easily add a Statamic application to Homestead using the `statamic` site type:
+Homestead поддерживает несколько «типов» сайтов, которые позволяют легко запускать проекты, не основанные на Laravel. Например, мы можем легко добавить приложение [Statamic](https://statamic.com/) в Homestead, используя тип сайта `statamic`:
 
 ```yaml
 sites:
@@ -442,12 +442,12 @@ sites:
       type: "statamic"
 ```
 
-The available site types are: `apache`, `apigility`, `expressive`, `laravel` (the default), `proxy`, `silverstripe`, `statamic`, `symfony2`, `symfony4`, and `zf`.
+Доступные типы сайтов: `apache`, `apigility`, `expressive`, `laravel` (по умолчанию), `proxy`, `silverstripe`, `statamic`, `symfony2`, `symfony4`, and `zf`.
 
 <a name="site-parameters"></a>
-#### Site Parameters
+#### Параметры сайтов
 
-You may add additional Nginx `fastcgi_param` values to your site via the `params` site directive:
+Вы можете добавить дополнительные значения `fastcgi_param` Nginx  на свой сайт с помощью директивы сайта `params`:
 
     sites:
         - map: homestead.test
@@ -457,9 +457,9 @@ You may add additional Nginx `fastcgi_param` values to your site via the `params
                 value: BAR
 
 <a name="environment-variables"></a>
-### Environment Variables
+### Настройка окружения
 
-You can define global environment variables by adding them to your `Homestead.yaml` file:
+Вы можете определить глобальные переменные окружения, добавив их в свой файл `Homestead.yaml`:
 
     variables:
         - key: APP_ENV
@@ -467,29 +467,29 @@ You can define global environment variables by adding them to your `Homestead.ya
         - key: FOO
           value: bar
 
-After updating the `Homestead.yaml` file, be sure to re-provision the machine by executing the `vagrant reload --provision` command. This will update the PHP-FPM configuration for all of the installed PHP versions and also update the environment for the `vagrant` user.
+После обновления файла `Homestead.yaml` не забудьте перезагрузить виртуальную машину, выполнив команду `vagrant reload --provision`. Это обновит конфигурацию PHP-FPM для всех установленных версий PHP, а также обновит среду для пользователя `vagrant`.
 
 <a name="ports"></a>
-### Ports
+### Порты
 
-By default, the following ports are forwarded to your Homestead environment:
+По умолчанию в среду Homestead перенаправляются следующие порты:
 
 <div class="content-list" markdown="1">
-- **SSH:** 2222 &rarr; Forwards To 22
-- **ngrok UI:** 4040 &rarr; Forwards To 4040
-- **HTTP:** 8000 &rarr; Forwards To 80
-- **HTTPS:** 44300 &rarr; Forwards To 443
-- **MySQL:** 33060 &rarr; Forwards To 3306
-- **PostgreSQL:** 54320 &rarr; Forwards To 5432
-- **MongoDB:** 27017 &rarr; Forwards To 27017
-- **Mailhog:** 8025 &rarr; Forwards To 8025
-- **Minio:** 9600 &rarr; Forwards To 9600
+- **SSH:** 2222 &rarr; перенаправляется на 22
+- **ngrok UI:** 4040 &rarr; перенаправляется на 4040
+- **HTTP:** 8000 &rarr; перенаправляется на 80
+- **HTTPS:** 44300 &rarr; перенаправляется на 443
+- **MySQL:** 33060 &rarr; перенаправляется на 3306
+- **PostgreSQL:** 54320 &rarr; перенаправляется на 5432
+- **MongoDB:** 27017 &rarr; перенаправляется на 27017
+- **Mailhog:** 8025 &rarr; перенаправляется на 8025
+- **Minio:** 9600 &rarr; перенаправляется на 9600
 </div>
 
 <a name="forwarding-additional-ports"></a>
-#### Forwarding Additional Ports
+#### Перенаправление дополнительных портов
 
-If you wish, you may forward additional ports to the Vagrant box by defining a `ports` configuration entry within your `Homestead.yaml` file. After updating the `Homestead.yaml` file, be sure to re-provision the machine by executing the `vagrant reload --provision` command:
+Вы можете перенаправить дополнительные порты в контейнер Vagrant, указав запись `ports` в конфигурационном файле `Homestead.yaml`. После обновления файла `Homestead.yaml` не забудьте повторно перезагрузить виртуальную машину, выполнив команду` vagrant reload --provision`:
 
     ports:
         - send: 50000
@@ -499,16 +499,16 @@ If you wish, you may forward additional ports to the Vagrant box by defining a `
           protocol: udp
 
 <a name="php-versions"></a>
-### PHP Versions
+### Версии PHP
 
-Homestead 6 introduced support for running multiple versions of PHP on the same virtual machine. You may specify which version of PHP to use for a given site within your `Homestead.yaml` file. The available PHP versions are: "5.6", "7.0", "7.1", "7.2", "7.3", "7.4", and "8.0" (the default):
+В Homestead 6 появилась поддержка запуска нескольких версий PHP на одной виртуальной машине. Вы можете указать, какую версию PHP использовать для данного сайта в файле `Homestead.yaml`. Доступные версии PHP: «5.6», «7.0», «7.1», «7.2», «7.3», «7.4» и «8.0» (по умолчанию):
 
     sites:
         - map: homestead.test
           to: /home/vagrant/project1/public
           php: "7.1"
 
-[Within your Homestead virtual machine](#connecting-via-ssh), you may use any of the supported PHP versions via the CLI:
+[На виртуальной машине Homestead](#connected-via-ssh) вы можете использовать любую из поддерживаемых версий PHP через интерфейс командной строки:
 
     php5.6 artisan list
     php7.0 artisan list
@@ -518,7 +518,7 @@ Homestead 6 introduced support for running multiple versions of PHP on the same 
     php7.4 artisan list
     php8.0 artisan list
 
-You may change the default version of PHP used by the CLI by issuing the following commands from within your Homestead virtual machine:
+Вы можете изменить версию PHP по умолчанию, используемую CLI, выполнив следующие команды на своей виртуальной машине Homestead:
 
     php56
     php70
@@ -529,7 +529,7 @@ You may change the default version of PHP used by the CLI by issuing the followi
     php80
 
 <a name="connecting-to-databases"></a>
-### Connecting To Databases
+### Соединение с базой данных
 
 A `homestead` database is configured for both MySQL and PostgreSQL out of the box. To connect to your MySQL or PostgreSQL database from your host machine's database client, you should connect to `127.0.0.1` on port `33060` (MySQL) or `54320` (PostgreSQL). The username and password for both databases is `homestead` / `secret`.
 

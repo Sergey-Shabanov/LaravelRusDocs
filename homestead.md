@@ -648,8 +648,6 @@ features:
 
 Иногда вы захотите поделиться тем, над чем сейчас работаете, с коллегами или клиентом. Vagrant имеет встроенную поддержку для этого с помощью команды `vagrant share`; однако это не сработает, если в файле `Homestead.yaml` настроено несколько сайтов.
 
-To solve this problem, Homestead includes its own `share` command. To get started, [SSH into your Homestead virtual machine](#connecting-via-ssh) via `vagrant ssh` and execute the `share homestead.test` command. This command will share the `homestead.test` site from your `Homestead.yaml` configuration file. You may substitute any of your other configured sites for `homestead.test`:
-
 Чтобы решить эту проблему, Homestead включает собственную команду `share`. Для начала [подключитесь через SSH к вашей виртуальной машине Homestead](#connecting-via-ssh) через `vagrant ssh` и выполните команду `share homestead.test`. Эта команда предоставит общий доступ к сайту `homestead.test` из файла конфигурации` Homestead.yaml`. Вы можете заменить любой из других настроенных вами сайтов на `homestead.test`:
 
     share homestead.test
@@ -752,8 +750,6 @@ networks:
 
 <a name="user-customizations"></a>
 ### Пользовательские настройки
-
-When using Homestead with your team, you may want to tweak Homestead to better fit your personal development style. To accomplish this, you may create a `user-customizations.sh` file in the root of your Homestead directory (the same directory containing your `Homestead.yaml` file). Within this file, you may make any customization you would like; however, the `user-customizations.sh` should not be version controlled.
 
 При использовании Homestead вместе со своей командой вы можете настроить Homestead, чтобы он лучше соответствовал вашему личному стилю разработки. Для этого вы можете создать файл `user-customizations.sh` в корне каталога Homestead (тот же каталог, где находится ваш файл` Homestead.yaml`). В этом файле вы можете сделать любую настройку, какую захотите; однако файл `user-customizations.sh` должен быть добавлен в список игнорируемых, если вы пользуетесь системами контроля версий ([VCS](https://ru.wikipedia.org/wiki/Система_управления_версиями)).
 

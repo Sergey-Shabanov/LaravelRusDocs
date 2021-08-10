@@ -4,33 +4,33 @@ git 646861d6a65766ca62d5fdbee4e2eec54548a610
 
 # Laravel Valet
 
-- [Introduction](#introduction)
-- [Installation](#installation)
-    - [Upgrading Valet](#upgrading-valet)
-- [Serving Sites](#serving-sites)
-    - [The "Park" Command](#the-park-command)
-    - [The "Link" Command](#the-link-command)
-    - [Securing Sites With TLS](#securing-sites)
-    - [Serving a Default Site](#serving-a-default-site)
-- [Sharing Sites](#sharing-sites)
-    - [Sharing Sites Via Ngrok](#sharing-sites-via-ngrok)
-    - [Sharing Sites Via Expose](#sharing-sites-via-expose)
-    - [Sharing Sites On Your Local Network](#sharing-sites-on-your-local-network)
-- [Site Specific Environment Variables](#site-specific-environment-variables)
-- [Proxying Services](#proxying-services)
-- [Custom Valet Drivers](#custom-valet-drivers)
-    - [Local Drivers](#local-drivers)
-- [Other Valet Commands](#other-valet-commands)
-- [Valet Directories & Files](#valet-directories-and-files)
+- [Введение](#introduction)
+- [Установка](#installation)
+    - [Обновление Valet](#upgrading-valet)
+- [Обслуживание сайтов](#serving-sites)
+    - [Команда "Park"](#the-park-command)
+    - [Команда "link"](#the-link-command)
+    - [Защита сайтов с помощью TLS](#securing-sites)
+    - [Обслуживание сайта по умолчанию](#serving-a-default-site)
+- [Публикация сайтов](#sharing-sites)
+    - [Публикация с Ngrok](#sharing-sites-via-ngrok)
+    - [Публикация с Expose](#sharing-sites-via-expose)
+    - [Публикация в локальной сети](#sharing-sites-on-your-local-network)
+- [Переменные окружения сайтов](#site-specific-environment-variables)
+- [Прокси-сервисы](#proxying-services)
+- [Пользовательские драйверы Valet](#custom-valet-drivers)
+    - [Локальные драйверы](#local-drivers)
+- [Другие команды Valet](#other-valet-commands)
+- [Директории и файлы Valet](#valet-directories-and-files)
 
 <a name="introduction"></a>
-## Introduction
+## Введение
 
-Valet is a Laravel development environment for macOS minimalists. Laravel Valet configures your Mac to always run [Nginx](https://www.nginx.com/) in the background when your machine starts. Then, using [DnsMasq](https://en.wikipedia.org/wiki/Dnsmasq), Valet proxies all requests on the `*.test` domain to point to sites installed on your local machine.
+Valet - это среда разработки Laravel для минималистов macOS. Laravel Valet настраивает ваш Mac так, чтобы он всегда запускал [Nginx](https://www.nginx.com/) в фоновом режиме при запуске вашего компьютера. Затем, используя [DnsMasq](https://en.wikipedia.org/wiki/Dnsmasq), Valet проксирует все запросы в домене `*.test`, чтобы они указывали на сайты, установленные на вашем локальном компьютере.
 
-In other words, Valet is a blazing fast Laravel development environment that uses roughly 7 MB of RAM. Valet isn't a complete replacement for [Sail](/docs/{{version}}/sail) or [Homestead](/docs/{{version}}/homestead), but provides a great alternative if you want flexible basics, prefer extreme speed, or are working on a machine with a limited amount of RAM.
+Другими словами, Valet - это невероятно быстрая среда разработки Laravel, которая использует примерно 7 МБ ОЗУ. Valet не является полной заменой [Sail](/docs/{{version}}/sail) или [Homestead](/docs/{{version}}/homestead), но представляет собой отличную альтернативу, если вам нужна гибкая основа, предпочитаете экстремальную скорость или работаете на машине с ограниченным объемом оперативной памяти.
 
-Out of the box, Valet support includes, but is not limited to:
+Стандартная поддержка Valet включает, но не ограничивается:
 
 <style>
     #valet-support > ul {
@@ -64,10 +64,10 @@ Out of the box, Valet support includes, but is not limited to:
 - [Zend](https://framework.zend.com)
 </div>
 
-However, you may extend Valet with your own [custom drivers](#custom-valet-drivers).
+However, you may extend Valet with your own [Пользовательские драйверы Valet](#custom-valet-drivers).
 
 <a name="installation"></a>
-## Installation
+## Установка
 
 > {note} Valet requires macOS and [Homebrew](https://brew.sh/). Before installation, you should make sure that no other programs such as Apache or Nginx are binding to your local machine's port 80.
 
@@ -113,17 +113,17 @@ If your application needs a database, check out [DBngin](https://dbngin.com). DB
 If you are having trouble getting your Valet installation to run properly, executing the `composer global update` command followed by `valet install` will reset your installation and can solve a variety of problems. In rare cases, it may be necessary to "hard reset" Valet by executing `valet uninstall --force` followed by `valet install`.
 
 <a name="upgrading-valet"></a>
-### Upgrading Valet
+### Обновление Valet
 
 You may update your Valet installation by executing the `composer global update` command in your terminal. After upgrading, it is good practice to run the `valet install` command so Valet can make additional upgrades to your configuration files if necessary.
 
 <a name="serving-sites"></a>
-## Serving Sites
+## Обслуживание сайтов
 
 Once Valet is installed, you're ready to start serving your Laravel applications. Valet provides two commands to help you serve your applications: `park` and `link`.
 
 <a name="the-park-command"></a>
-### The `park` Command
+### Команда "Park"
 
 The `park` command registers a directory on your machine that contains your applications. Once the directory has been "parked" with Valet, all of the directories within that directory will be accessible in your web browser at `http://<directory-name>.test`:
 
@@ -134,7 +134,7 @@ The `park` command registers a directory on your machine that contains your appl
 That's all there is to it. Now, any application you create within your "parked" directory will automatically be served using the `http://<directory-name>.test` convention. So, if your parked directory contains a directory named "laravel", the application within that directory will be accessible at `http://laravel.test`. In addition, Valet automatically allows you to access the site using wildcard subdomains (`http://foo.laravel.test`).
 
 <a name="the-link-command"></a>
-### The `link` Command
+### Команда "link"
 
 The `link` command can also be used to serve your Laravel applications. This command is useful if you want to serve a single site in a directory and not the entire directory:
 
@@ -161,7 +161,7 @@ The `unlink` command may be used to destroy the symbolic link for a site:
     valet unlink
 
 <a name="securing-sites"></a>
-### Securing Sites With TLS
+### Защита сайтов с помощью TLS
 
 By default, Valet serves sites over HTTP. However, if you would like to serve a site over encrypted TLS using HTTP/2, you may use the `secure` command. For example, if your site is being served by Valet on the `laravel.test` domain, you should run the following command to secure it:
 
@@ -172,19 +172,19 @@ To "unsecure" a site and revert back to serving its traffic over plain HTTP, use
     valet unsecure laravel
 
 <a name="serving-a-default-site"></a>
-### Serving A Default Site
+### Обслуживание сайта по умолчанию
 
 Sometimes, you may wish to configure Valet to serve a "default" site instead of a `404` when visiting an unknown `test` domain. To accomplish this, you may add a `default` option to your `~/.config/valet/config.json` configuration file containing the path to the site that should serve as your default site:
 
     "default": "/Users/Sally/Sites/foo",
 
 <a name="sharing-sites"></a>
-## Sharing Sites
+## Публикация сайтов
 
 Valet even includes a command to share your local sites with the world, providing an easy way to test your site on mobile devices or share it with team members and clients.
 
 <a name="sharing-sites-via-ngrok"></a>
-### Sharing Sites Via Ngrok
+### Публикация с Ngrok
 
 To share a site, navigate to the site's directory in your terminal and run Valet's `share` command. A publicly accessible URL will be inserted into your clipboard and is ready to paste directly into your browser or share with your team:
 
@@ -197,7 +197,7 @@ To stop sharing your site, you may press `Control + C`.
 > {tip} You may pass additional Ngrok parameters to the share command, such as `valet share --region=eu`. For more information, consult the [ngrok documentation](https://ngrok.com/docs).
 
 <a name="sharing-sites-via-expose"></a>
-### Sharing Sites Via Expose
+### Публикация с Expose
 
 If you have [Expose](https://expose.dev) installed, you can share your site by navigating to the site's directory in your terminal and running the `expose` command. Consult the [Expose documentation](https://expose.dev/docs) for information regarding the additional command-line parameters it supports. After sharing the site, Expose will display the sharable URL that you may use on your other devices or amongst team members:
 
@@ -208,7 +208,7 @@ If you have [Expose](https://expose.dev) installed, you can share your site by n
 To stop sharing your site, you may press `Control + C`.
 
 <a name="sharing-sites-on-your-local-network"></a>
-### Sharing Sites On Your Local Network
+### Публикация в локальной сети
 
 Valet restricts incoming traffic to the internal `127.0.0.1` interface by default so that your development machine isn't exposed to security risks from the Internet.
 
@@ -219,7 +219,7 @@ If you have not run `valet secure` on the project, you can open up network acces
 Once you have updated your Nginx configuration, run the `valet restart` command to apply the configuration changes.
 
 <a name="site-specific-environment-variables"></a>
-## Site Specific Environment Variables
+## Переменные окружения сайтов
 
 Some applications using other frameworks may depend on server environment variables but do not provide a way for those variables to be configured within your project. Valet allows you to configure site specific environment variables by adding a `.valet-env.php` file within the root of your project. This file should return an array of site / environment variable pairs which will be added to the global `$_SERVER` array for each site specified in the array:
 
@@ -238,7 +238,7 @@ Some applications using other frameworks may depend on server environment variab
     ];
 
 <a name="proxying-services"></a>
-## Proxying Services
+## Прокси-сервисы
 
 Sometimes you may wish to proxy a Valet domain to another service on your local machine. For example, you may occasionally need to run Valet while also running a separate site in Docker; however, Valet and Docker can't both bind to port 80 at the same time.
 
@@ -261,7 +261,7 @@ You may use the `proxies` command to list all site configurations that are proxi
     valet proxies
 
 <a name="custom-valet-drivers"></a>
-## Custom Valet Drivers
+## Пользовательские драйверы Valet
 
 You can write your own Valet "driver" to serve PHP applications running on a framework or CMS that is not natively supported by Valet. When you install Valet, a `~/.config/valet/Drivers` directory is created which contains a `SampleValetDriver.php` file. This file contains a sample driver implementation to demonstrate how to write a custom driver. Writing a driver only requires you to implement three methods: `serves`, `isStaticFile`, and `frontControllerPath`.
 
@@ -334,7 +334,7 @@ The `frontControllerPath` method should return the fully qualified path to your 
     }
 
 <a name="local-drivers"></a>
-### Local Drivers
+### Локальные драйверы
 
 If you would like to define a custom Valet driver for a single application, create a `LocalValetDriver.php` file in the application's root directory. Your custom driver may extend the base `ValetDriver` class or extend an existing application specific driver such as the `LaravelValetDriver`:
 
@@ -368,7 +368,7 @@ If you would like to define a custom Valet driver for a single application, crea
     }
 
 <a name="other-valet-commands"></a>
-## Other Valet Commands
+## Другие команды Valet
 
 Command  | Description
 ------------- | -------------
@@ -382,7 +382,7 @@ Command  | Description
 `valet uninstall` | Uninstall Valet: shows instructions for manual uninstall. Pass the `--force` option to aggressively delete all of Valet's resources.
 
 <a name="valet-directories-and-files"></a>
-## Valet Directories & Files
+## Директории и файлы Valet
 
 You may find the following directory and file information helpful while troubleshooting issues with your Valet environment:
 

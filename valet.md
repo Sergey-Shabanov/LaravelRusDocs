@@ -64,32 +64,32 @@ Valet - это среда разработки Laravel для минималис
 - [Zend](https://framework.zend.com)
 </div>
 
-However, you may extend Valet with your own [Пользовательские драйверы Valet](#custom-valet-drivers).
+Однако вы можете расширить Valet [пользовательскими драйверами](#custom-valet-drivers).
 
 <a name="installation"></a>
 ## Установка
 
-> {note} Valet requires macOS and [Homebrew](https://brew.sh/). Before installation, you should make sure that no other programs such as Apache or Nginx are binding to your local machine's port 80.
+> {note} Valet требует macOS и [Homebrew](https://brew.sh/). Перед установкой вы должны убедиться, что никакие другие программы, такие как Apache или Nginx, не привязаны к порту 80 вашего локального компьютера.
 
-To get started, you first need to ensure that Homebrew is up to date using the `update` command:
+Для начала вам необходимо убедиться, что Homebrew обновлен, используя команду `update`:
 
     brew update
 
-Next, you should use Homebrew to install PHP:
+Затем используйте Homebrew для установки PHP:
 
     brew install php
 
-After installing PHP, you are ready to install the [Composer package manager](https://getcomposer.org). In addition, you should make sure the `~/.composer/vendor/bin` directory is in your system's "PATH". After Composer has been installed, you may install Laravel Valet as a global Composer package:
+После установки PHP вы готовы установить [менеджер пакетов Composer](https://getcomposer.org). Вдобавок вы должны убедиться, что каталог `~/.composer/vendor/bin` указан в "PATH" вашей системы. После установки Composer вы можете установить Laravel Valet как глобальный пакет Composer:
 
     composer global require laravel/valet
 
-Finally, you may execute Valet's `install` command. This will configure and install Valet and DnsMasq. In addition, the daemons Valet depends on will be configured to launch when your system starts:
+Наконец, вы можете выполнить команду Valet `install`. Это настроит и установит Valet и DnsMasq. Кроме того, фоновые службы, от которых зависит Valet, будут настроены для запуска при старте вашей системы:
 
     valet install
 
-Once Valet is installed, try pinging any `*.test` domain on your terminal using a command such as `ping foobar.test`. If Valet is installed correctly you should see this domain responding on `127.0.0.1`.
+После установки Valet проверьте ответ от любого домена `* .test` в терминале с помощью такой команды, как `ping foobar.test`. Если Valet установлен правильно, вы должны увидеть, что этот домен отвечает на адресе `127.0.0.1`.
 
-Valet will automatically start its required services each time your machine boots.
+Valet будет автоматически запускать необходимые службы при каждой загрузке вашего компьютера.
 
 <a name="php-versions"></a>
 #### PHP Versions
